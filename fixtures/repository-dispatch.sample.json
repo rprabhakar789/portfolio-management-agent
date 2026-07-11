@@ -1,0 +1,24 @@
+{
+  "action": "portfolio-agent-email",
+  "client_payload": {
+    "source": "gmail",
+    "target_repo": "rprabhakar789/devfolio",
+    "requested_paths": [
+      "content/about.md",
+      "content/projects.yaml"
+    ],
+    "email": {
+      "from": {
+        "email": "rahul@example.com",
+        "name": "Rahul"
+      },
+      "subject": "Refresh about section and projects",
+      "body": "Please update the about section and featured projects with my latest GitHub work. Publish this once checks pass.",
+      "labels": [
+        "portfolio-agent"
+      ],
+      "message_id": "gmail-message-123",
+      "received_at": "2026-07-11T10:15:00.000Z"
+    }
+  }
+}
