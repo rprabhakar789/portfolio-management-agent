@@ -1,0 +1,37 @@
+{
+  "name": "portfolio-management-agent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Gmail-driven orchestration for portfolio content updates in rprabhakar789/devfolio.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "process-dispatch": "node dist/cli/process-dispatch.js"
+  },
+  "keywords": [
+    "github-actions",
+    "gmail",
+    "portfolio",
+    "automation"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@octokit/rest": "^22.0.1",
+    "simple-git": "^3.36.0",
+    "yaml": "^2.9.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@types/node": "^26.1.1",
+    "eslint": "^9.39.5",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.63.0",
+    "vitest": "^3.2.7"
+  }
+}

@@ -1,0 +1,51 @@
+name: Process portfolio dispatch
+
+on:
+  repository_dispatch:
+    types:
+      - portfolio-agent-email
+
+permissions:
+  contents: read
+
+jobs:
+  process-dispatch:
+    runs-on: ubuntu-latest
+
+    env:
+      AI_PROVIDER: ${{ vars.AI_PROVIDER }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}
+      EMAIL_NOTIFICATION_WEBHOOK_URL: ${{ secrets.EMAIL_NOTIFICATION_WEBHOOK_URL }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+      PORTFOLIO_REPO_TOKEN: ${{ secrets.PORTFOLIO_REPO_TOKEN }}
+      TARGET_BASE_BRANCH: ${{ vars.TARGET_BASE_BRANCH || 'main' }}
+      TARGET_REPO: ${{ vars.TARGET_REPO || 'rprabhakar789/devfolio' }}
+      TARGET_REPO_PATH: target-repo
+
+    steps:
+      - name: Check out orchestration repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build orchestration scripts
+        run: npm run build
+
+      - name: Check out target portfolio repo
+        uses: actions/checkout@v4
+        with:
+          path: target-repo
+          repository: ${{ env.TARGET_REPO }}
+          token: ${{ secrets.PORTFOLIO_REPO_TOKEN }}
+
+      - name: Run portfolio dispatch orchestrator
+        run: npm run process-dispatch
